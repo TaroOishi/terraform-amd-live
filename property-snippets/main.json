@@ -1,0 +1,155 @@
+{
+    "rules": {
+        "name": "default",
+        "children": [
+            {
+                "name": "Default CORS Policy",
+                "children": [],
+                "behaviors": [
+                    {
+                        "name": "modifyOutgoingResponseHeader",
+                        "options": {
+                            "action": "MODIFY",
+                            "avoidDuplicateHeaders": false,
+                            "newHeaderValue": "*",
+                            "standardModifyHeaderName": "ACCESS_CONTROL_ALLOW_ORIGIN"
+                        }
+                    },
+                    {
+                        "name": "modifyOutgoingResponseHeader",
+                        "options": {
+                            "action": "MODIFY",
+                            "avoidDuplicateHeaders": false,
+                            "newHeaderValue": "GET,POST,OPTIONS",
+                            "standardModifyHeaderName": "ACCESS_CONTROL_ALLOW_METHODS"
+                        }
+                    },
+                    {
+                        "name": "modifyOutgoingResponseHeader",
+                        "options": {
+                            "action": "MODIFY",
+                            "avoidDuplicateHeaders": false,
+                            "newHeaderValue": "origin,range,hdntl,hdnts,CMCD-Request,CMCD-Object,CMCD-Status,CMCD-Session",
+                            "standardModifyHeaderName": "ACCESS_CONTROL_ALLOW_HEADERS"
+                        }
+                    },
+                    {
+                        "name": "modifyOutgoingResponseHeader",
+                        "options": {
+                            "action": "MODIFY",
+                            "avoidDuplicateHeaders": false,
+                            "newHeaderValue": "Server,range,hdntl,hdnts,Akamai-Mon-Iucid-Ing,Akamai-Mon-Iucid-Del,Akamai-Request-BC",
+                            "standardModifyHeaderName": "ACCESS_CONTROL_EXPOSE_HEADERS"
+                        }
+                    },
+                    {
+                        "name": "modifyOutgoingResponseHeader",
+                        "options": {
+                            "action": "MODIFY",
+                            "avoidDuplicateHeaders": false,
+                            "newHeaderValue": "true",
+                            "standardModifyHeaderName": "ACCESS_CONTROL_ALLOW_CREDENTIALS"
+                        }
+                    },
+                    {
+                        "name": "modifyOutgoingResponseHeader",
+                        "options": {
+                            "action": "MODIFY",
+                            "avoidDuplicateHeaders": false,
+                            "newHeaderValue": "86400",
+                            "standardModifyHeaderName": "ACCESS_CONTROL_MAX_AGE"
+                        }
+                    }
+                ],
+                "criteria": [],
+                "criteriaMustSatisfy": "all",
+                "comments": ""
+            }
+        ],
+        "behaviors": [
+            {
+                "name": "origin",
+                "options": {
+                    "originType": "MEDIA_SERVICE_LIVE",
+                    "mslorigin": "${env.mslorigin}"
+                }
+            },
+            {
+                "name": "cpCode",
+                "options": {
+                    "value": {
+                        "description": "${env.cpcode_name}",
+                        "products": [
+                            "Adaptive_Media_Delivery"
+                        ],
+			"id": "${env.cpcode}",
+                       "name": "${env.cpcode_name}"
+                    }
+                }
+            },
+            {
+                "name": "segmentedMediaOptimization",
+                "options": {
+                    "behavior": "LIVE",
+                    "showAdvanced": false,
+                    "enableUllStreaming": false
+                }
+            },
+            {
+                "name": "originCharacteristics",
+                "options": {
+                    "authenticationMethod": "AUTOMATIC",
+                    "country": "JAPAN",
+                    "authenticationMethodTitle": ""
+                }
+            },
+            {
+                "name": "contentCharacteristicsAMD",
+                "options": {
+                    "catalogSize": "UNKNOWN",
+                    "contentType": "HD",
+                    "dash": false,
+                    "hds": false,
+                    "hls": true,
+                    "popularityDistribution": "UNKNOWN",
+                    "segmentDurationHLS": "SEGMENT_DURATION_6S",
+                    "segmentSizeHLS": "UNKNOWN",
+                    "smooth": false
+                }
+            },
+            {
+                "name": "clientCharacteristics",
+                "options": {
+                    "country": "JAPAN"
+                }
+            },
+            {
+                "name": "cacheKeyQueryParams",
+                "options": {
+                    "behavior": "IGNORE_ALL"
+                }
+            },
+            {
+                "name": "segmentedContentProtection",
+                "options": {
+                    "enabled": false,
+                    "hlsMediaEncryption": false,
+                    "tokenAuthenticationTitle": "",
+                    "mediaEncryptionTitle": "",
+                    "dashMediaEncryption": false
+                }
+            },
+            {
+                "name": "dynamicThroughtputOptimization",
+                "options": {
+                    "enabled": true
+                }
+            }
+        ],
+        "options": {
+            "is_secure": true
+        },
+        "variables": [],
+        "comments": ""
+    }
+}
