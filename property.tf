@@ -3,10 +3,6 @@ data "akamai_group" "group" {
   contract_id = var.akamai_group.contract_id
 }
 
-data "akamai_contract" "contract" {
-  group_name = data.akamai_group.group.name
-}
-
 data "akamai_property_rules_template" "rules" {
   template_file = abspath("${path.module}/property-snippets/main.json")
   variables {
@@ -28,7 +24,7 @@ data "akamai_property_rules_template" "rules" {
 
 resource "akamai_edge_hostname" "amd" {
   product_id    = "prd_Adaptive_Media_Delivery"
-  contract_id   = data.akamai_contract.contract.id
+  contract_id   = data.akamai_group.group.contract_id
   group_id      = data.akamai_group.group.id
   ip_behavior   = "IPV6_COMPLIANCE"
   edge_hostname = var.edge_hostname
@@ -43,7 +39,7 @@ resource "akamai_edge_hostname" "amd" {
 
 resource "akamai_property" "amd" {
   name        = var.cname_from
-  contract_id = data.akamai_contract.contract.id
+  contract_id = data.akamai_group.group.contract_id
   group_id    = data.akamai_group.group.id
   product_id  = "prd_Adaptive_Media_Delivery"
   rule_format = "latest"
@@ -66,6 +62,6 @@ resource "akamai_property_activation" "amd" {
 resource "akamai_cp_code" "amd" {
   name = var.cpcode_name
   group_id = data.akamai_group.group.id
-  contract_id = data.akamai_contract.contract.id
+  contract_id = data.akamai_group.group.contract_id
   product_id = "prd_Adaptive_Media_Delivery"
 }
